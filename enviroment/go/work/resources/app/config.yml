@@ -1,0 +1,9 @@
+mode: "production"
+httpPort: "8080"
+dbUrl: "127.0.0.1"
+dbPort: "5432"
+dbUser: "tmp_project_name"
+dbPassword: "tmp_project_name"
+dbName: "tmp_project_namedb"
+secretKey: "secret"
+loginExpTime: 24

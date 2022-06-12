@@ -1,0 +1,52 @@
+version: '3'
+
+services: 
+  tmp_project_name_builder:
+    container_name: "tmp_project_name_builder"
+    build: 
+      dockerfile: "Dockerfile"
+      context: "builder"
+    volumes: 
+      - ".:/mnt/workspace:cached"
+      - "golang_workspace:/workspace/golang"
+      - "node_workspace:/workspace/node"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+  tmp_project_name_go:
+    build:
+      dockerfile: "Dockerfile"
+      context: "go"
+    container_name: tmp_project_name_go
+    volumes:
+      - ".:/mnt/workspace:cached"
+      - "golang_workspace:/workspace"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+    ports: 
+      - "8080:8080"
+    depends_on: 
+      - tmp_project_name_db
+  tmp_project_name_node:
+    build:
+      dockerfile: "Dockerfile"
+      context: "node"
+    container_name: tmp_project_name_node
+    volumes:
+      - ".:/mnt/workspace:cached"
+      - "node_workspace:/workspace"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    tty: true
+    ports: 
+      - "4200:4200"
+  tmp_project_name_db:
+    image: postgres:11.3
+    container_name: tmp_project_name_db
+    environment: 
+      POSTGRES_USER: "tmp_project_name"
+      POSTGRES_PASSWORD: "tmp_project_name"
+      POSTGRES_DB: "tmp_project_namedb"
+
+volumes:
+  node_workspace:
+  golang_workspace:
+
