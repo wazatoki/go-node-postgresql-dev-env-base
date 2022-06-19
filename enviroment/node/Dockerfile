@@ -28,6 +28,7 @@ RUN rm -rf /noto
 RUN npm install -g @angular/cli @vue/cli
 
 ENV CHROME_BIN="/usr/bin/chromium-browser"
+ENV NODE_OPTIONS="--max_old_space_size=4096"
 
 WORKDIR /workspace
 
